@@ -1,5 +1,18 @@
-def say_hello(name, age):
-    print("hello", name)
-    print("you are", age, "years old")
+def plus(a=0, b=0):
+    print(a + b)
 
-say_hello("discphy", 28)
+def minus(a=0, b=0):
+    print(a - b)
+
+def multiply(a=0, b=0):
+    print(a * b)
+
+def divide(a=0, b=1):
+    print(a / b)
+
+plus()
+minus()
+multiply()
+divide()
+
+
