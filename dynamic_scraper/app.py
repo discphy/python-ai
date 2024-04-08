@@ -1,37 +1,52 @@
 from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
 import time
+import csv
 
-p = sync_playwright().start()
+def execute(keyword):
+    p = sync_playwright().start()
 
-browser = p.chromium.launch(headless=False)
+    browser = p.chromium.launch(headless=False)
+    page = browser.new_page()
+    page.goto(f"https://www.wanted.co.kr/search?query={keyword}&tab=position")
+    for x in range(5):
+        time.sleep(3)
+        page.keyboard.down("End")
+    content = page.content()
+    p.stop()
 
-page = browser.new_page()
+    soup = BeautifulSoup(content, "html.parser")
+    jobs = soup.find_all("div", class_="JobCard_container__FqChn")
+    jobs_db = []
+    for job in jobs:
+        link = f'https://www.wanted.co.kr/{job.find("a")["href"]}'
+        title = job.find("strong", class_="JobCard_title__ddkwM").text
+        company_name = job.find("span", class_="JobCard_companyName__vZMqJ").text
+        reward = job.find("span", class_="JobCard_reward__sdyHn").text
 
-page.goto("https://www.wanted.co.kr")
+        job = {
+            "title": title,
+            "company_name": company_name,
+            "reward": reward,
+            "link": link
+        }
 
-time.sleep(5)
+        jobs_db.append(job)
+    print(jobs_db)
+    print(len(jobs_db))
+    file = open(f"{keyword}_jobs.csv", "w")
+    writer = csv.writer(file)
+    writer.writerow(["Title", "Company", "Reward", "Link"])
+    for job in jobs_db:
+        writer.writerow(job.values())
 
-page.click("button.Aside_searchButton__Xhqq3")
+keywords = [
+    "flutter",
+    "nextjs",
+    "kotlin"
+]
 
-time.sleep(5)
+for keyword in keywords:
+    execute(keyword)
 
-page.get_by_placeholder("검색어를 입력해 주세요.").fill("flutter")
-
-time.sleep(5)
-
-page.keyboard.down("Enter")
-
-time.sleep(5)
-
-page.click("a#search_tab_position")
-
-for x in range(5):
-    time.sleep(5)
-    page.keyboard.down("End")
-
-content = page.content()
-
-p.stop()
-
-soup = BeautifulSoup(content, "html.parser")
+# TODO : code challenge OOP
