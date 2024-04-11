@@ -6,10 +6,11 @@
   <component name="ComposerSettings">
     <execution />
   </component>
-  <component name="ProjectRootManager">
-    <output url="file://$PROJECT_DIR$/out" />
-  </component>
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.9 (python-ai)" project-jdk-type="Python SDK" />
   <component name="ProjectType">
     <option name="id" value="jpab" />
+  </component>
+  <component name="PyCharmProfessionalAdvertiser">
+    <option name="shown" value="true" />
   </component>
 </project>

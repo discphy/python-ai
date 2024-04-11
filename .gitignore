@@ -1,1 +1,9 @@
 /dynamic_scraper/screenshot.png
+python-ai.iml
+.idea
+
+/dynamic_scraper/file.csv
+/dynamic_scraper/flutter_jobs.csv
+/dynamic_scraper/jobs.csv
+/dynamic_scraper/kotlin_jobs.csv
+/dynamic_scraper/nextjs_jobs.csv
